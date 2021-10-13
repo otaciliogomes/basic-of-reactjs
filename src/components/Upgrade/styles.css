@@ -1,0 +1,153 @@
+.root {
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.containerPrimary {
+    display: grid;
+    grid-template-columns:  1fr 4fr;
+    /* grid-template-rows: 50vh ; */
+    grid-template-areas:"title title"
+                        "radio pointers"
+                        "content content"  ;
+    grid-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px #eee;
+    border-radius: 10px;
+}
+
+.titleh2 {
+    grid-area: title;
+    justify-self: center;
+    font-size: 18px;
+    font-weight: bolder;
+}
+.opacity{
+    opacity: 0.0;
+}
+
+.containerRadio {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    grid-area: content;
+    position: relative;
+}
+
+
+.radio {
+    /* color: orange; */
+    border: solid 6px #fff;
+    /* border-color: #Fff; */
+    appearance:none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow:0 0 0 1px orange;
+    padding: 10px;
+    transition:all ease-in 0.2s;
+    grid-area: radio;
+
+}
+
+.radioBtn:checked, .radio:checked {
+background-color: orange;
+}
+
+
+
+.contentColumn {
+    margin: 10px;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.radiosOptions {
+    display:flex;
+    align-items: flex-end;
+    /* grid-template-columns: repeat( minmax(280px, 1fr)); */
+    overflow-x: scroll;
+    overflow-y:hidden;
+    overflow: hidden;
+}
+
+.radioAndPoints {
+    display:flex;
+    /* grid-area: pointers; */
+    margin: 0px 10px;
+    /* position: relative; */
+}
+
+ .containerRadioPrimary {
+    display:flex;
+    flex-direction: column;
+    font-size: 0.9em;
+    /* position:absolute; */
+    /* z-index: 99; */
+    grid-area: pointers;
+}
+
+.radioAndPoints .containerRadioRead {
+    opacity: 0.0;
+    font-size: 1.0em;
+    /* position: relative; */
+    /* z-index:99 */
+}
+.points {
+    margin: 0px 6px;
+    font-size: 1.2em;
+}
+
+.goldContent{
+    color: orange
+}
+.gridPoints{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.labelRadio {
+    margin: 14px;
+}
+
+.textView {
+    position: absolute;
+    top: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    z-index: 99 ;
+    /* margin:0; */
+    padding: 0;
+    margin-left: 4px;
+}
+
+.textViewOrange {
+    color: orange
+}
+
+.letter {
+    opacity: 0.0;
+    /* z-index: -1; */
+    /* position: absolute; */
+    /* top: 0; */
+    bottom: 0;
+    font-size: 1.5rem;
+}
+
+.contentTitle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}

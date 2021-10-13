@@ -1,129 +1,88 @@
 import './styles.css';
-import { Component } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Posts } from '../../components/Posts';
 import { loadPosts } from '../../utils/load-post';
 import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
 
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+const Home = () => {
+  const [posts, setPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  const [postsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
 
-    this.state = {
-      count: 0,
-      posts: [],
-      allPosts: [],
-      page: 0,
-      postsPerPage: 5,
-      searchValue: ''
-    }
+  const noMorePosts = page + postsPerPage >= allPosts.length;
 
-  }
+  const filteredPosts = searchValue ?
+    allPosts.filter(post => {
+      return post.title.toLowerCase()
+        .includes(searchValue.toLocaleLowerCase())
+    })
+    : posts;
 
-  async componentDidMount() {
-    await this.loadPosts()
-  }
-
-  loadPosts = async () => {
-    const { page, postsPerPage } = this.state;
-
+  const handleLoadPosts = useCallback(async (page, postsPerPage) => {
     const initialPosts = await loadPosts();
-    this.setState({
-      posts: initialPosts.slice(page, postsPerPage),
-      allPosts: initialPosts,
-    });
-  }
+    setPosts(initialPosts.slice(page, postsPerPage))
+    setAllPosts(initialPosts);
+  }, [])
 
-  loadMorePosts = () => {
-    const {
-      page,
-      postsPerPage,
-      allPosts,
-      posts
-    } = this.state;
+  useEffect(() => {
+    handleLoadPosts(0, postsPerPage);
+  }, [handleLoadPosts, postsPerPage])
 
+  const loadMorePosts = () => {
     const nextPage = page + postsPerPage;
     const nextPosts = allPosts.slice(nextPage, nextPage + postsPerPage)
     posts.push(...nextPosts)
 
-    this.setState({ posts, page: nextPage })
-
+    setPosts(posts);
+    setPage(nextPage);
   }
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const { value } = event.target;
-    this.setState({ searchValue: value })
+    setSearchValue(value);
   }
 
-  render() {
-    const { posts, page, postsPerPage, allPosts, searchValue } = this.state;
-    const noMorePosts = page + postsPerPage >= allPosts.length;
 
-    const filteredPosts = searchValue ?
-      allPosts.filter(post => {
-        return post.title.toLowerCase()
-          .includes(searchValue.toLocaleLowerCase())
-      })
-      : posts;
-
-    return (
-      <section className="container">
-        <div className="searchTitle">
-          {
-            searchValue && <h1> Search: {searchValue} </h1>
-          }
-
-          <TextInput searchValue={searchValue} handleChange={this.handleChange} />
-        </div>
+  return (
+    <section className="container">
+      <div className="searchTitle">
         {
-          filteredPosts.length > 0 && (
-            <Posts posts={filteredPosts} />
-          )
-        }
-        {
-          filteredPosts.length < 1 && (
-            <h2>Não existem posts</h2>
-          )
+          searchValue && <h1> Search: {searchValue} </h1>
         }
 
-        <div class="button-container">
-          {
-            !searchValue && (
-              <Button
-                text="Load"
-                onClick={this.loadMorePosts}
-                disabled={noMorePosts}
-              />
-            )
-          }
+        <TextInput searchValue={searchValue} handleChange={handleChange} />
+      </div>
+      {
+        filteredPosts.length > 0 && (
+          <Posts posts={filteredPosts} />
+        )
+      }
+      {
+        filteredPosts.length < 1 && (
+          <h2>Não existem posts</h2>
+        )
+      }
 
-        </div>
-      </section>
-    )
-  }
+      <div class="button-container">
+        {
+          !searchValue && (
+            <Button
+              text="Load"
+              onClick={loadMorePosts}
+              disabled={noMorePosts}
+            />
+          )
+        }
+
+      </div>
+    </section>
+  );
 }
 
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default Home;

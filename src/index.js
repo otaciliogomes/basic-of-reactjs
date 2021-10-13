@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/global.css';
 import reportWebVitals from './reportWebVitals';
-import Home from './pages/Home';
+import {Upgrade} from './components/Upgrade'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home />
+    <Upgrade />
   </React.StrictMode>,
   document.getElementById('root')
 );
