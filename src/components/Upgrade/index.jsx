@@ -44,9 +44,13 @@ const Upgrade = () => {
                                 }
                             </label>
                             <div className="containerRadio" >
+                            <label aria="classe"> </label>
                                 <label htmlFor={pacote.title} className="labelRadio" >{pacote.content?.class}</label>
+                                <label aria-label="Bagagem Despachada"></label>
                                 <label htmlFor={pacote.title} className="labelRadio" >{pacote.content?.bagagem}</label>
+                                <label aria-label="Reembolsável"></label>
                                 <label htmlFor={pacote.title} className="labelRadio" >{pacote.content?.marcacao}</label>
+                                <label aria-label="Alteração e Cancelamento"></label>
                                 <label htmlFor={pacote.title} className="labelRadio" >{pacote.content?.reembolso}</label>
                             </div>
                         </div>
